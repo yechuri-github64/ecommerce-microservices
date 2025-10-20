@@ -4,7 +4,7 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import javax.imageio.ImageIO;
+import jakarta.imageio.ImageIO;
 import lombok.SneakyThrows;
 import org.springframework.web.multipart.MultipartFile;
 

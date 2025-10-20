@@ -19,7 +19,6 @@
         <module>notification-service</module>
         <module>order-service</module>
         <module>payment-service</module>
-        <module>product-service</module>
         <module>inventory-service</module>
         <module>favourite-service</module>
         <module>search-service</module>
@@ -34,9 +33,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>21</java.version>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <ecommerce.version>1.0-SNAPSHOT</ecommerce.version>
         <revision>1.0-SNAPSHOT</revision>
 
