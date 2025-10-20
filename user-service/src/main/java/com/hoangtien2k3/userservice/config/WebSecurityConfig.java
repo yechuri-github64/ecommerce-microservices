@@ -3,12 +3,11 @@ package com.hoangtien2k3.userservice.config;
 import com.hoangtien2k3.userservice.security.jwt.JwtEntryPoint;
 import com.hoangtien2k3.userservice.security.jwt.JwtTokenFilter;
 import com.hoangtien2k3.userservice.security.userprinciple.UserDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,13 +17,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableMethodSecurity(prePostEnabled = true) // replaces @EnableGlobalMethodSecurity
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
     private final UserDetailService userDetailService;
     private final JwtEntryPoint jwtEntryPoint;
 
-    @Autowired
     public WebSecurityConfig(UserDetailService userDetailService, JwtEntryPoint jwtEntryPoint) {
         this.userDetailService = userDetailService;
         this.jwtEntryPoint = jwtEntryPoint;
@@ -41,21 +39,16 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public UserDetailService userDetailsService() {
-        return userDetailService;
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setUserDetailsService(userDetailService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        return http.getSharedObject(AuthenticationManager.class);
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 
     @Bean
@@ -72,12 +65,15 @@ public class WebSecurityConfig {
                 .requestMatchers("/v2/api-docs", "/swagger-ui/**", "/swagger-resources/**", "/webjars/**").permitAll()
                 .anyRequest().authenticated()
             )
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtEntryPoint))
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
+            .exceptionHandling(exception -> exception
+                .authenticationEntryPoint(jwtEntryPoint)
+            )
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 }
-
