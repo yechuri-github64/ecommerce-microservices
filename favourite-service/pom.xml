@@ -15,7 +15,7 @@
 	<description>Favourite Service</description>
 	<properties>
 		<java.version>17</java.version>
-		<spring-cloud.version>2021.0.8</spring-cloud.version>
+		<spring-cloud.version>2023.0.6</spring-cloud.version>
 		<sonar.organization>hoangtien2k3</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
@@ -50,6 +50,7 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
+			<version>3.1.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -78,7 +79,7 @@
 		</dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
+	    <artifactId>jackson-annotations</artifactId>
         </dependency>
 		<dependency>
 			<groupId>org.modelmapper</groupId>
@@ -88,6 +89,7 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-sleuth</artifactId>
+			<version>3.1.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

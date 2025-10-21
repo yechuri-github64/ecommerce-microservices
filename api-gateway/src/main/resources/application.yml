@@ -1,12 +1,16 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   application:
     name: API-GATEWAY
   main:
+<<<<<<< HEAD
     web-application-type: reactive   # Ensure reactive stack
 
+=======
+    web-application-type: reactive
+>>>>>>> 4e2703e (Update API Gateway application.yml)
 
   cloud:
     gateway:
