@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: API-GATEWAY
+  main:
+    web-application-type: reactive   # Ensure reactive stack
+
 
   cloud:
     gateway:
