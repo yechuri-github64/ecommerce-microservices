@@ -300,7 +300,7 @@ public class UserServiceImpl implements UserService {
                 .uri(refreshTokenUrl)
                 .header("Refresh-Token", refreshToken)
                 .retrieve()
-                .onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new IllegalArgumentException("Refresh token không hợp lệ")))
+                .onStatus(status -> status.is4xxClientError(), clientResponse -> Mono.error(new IllegalArgumentException("Refresh token không hợp lệ")))
                 .bodyToMono(JwtResponseMessage.class)
                 .map(JwtResponseMessage::getAccessToken); // Sử dụng getAccessToken để lấy token từ JwtResponse
     }

@@ -21,14 +21,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests(auth -> auth
-                        .antMatchers("/actuator/prometheus", "/actuator/health/**",
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/actuator/prometheus", "/actuator/health/**",
                                 "/swagger-ui", "/swagger-ui/**", "/error", "/v3/api-docs/**").permitAll()
-                        .antMatchers("/storefront/**").permitAll()
-                        .antMatchers("/backoffice/**").hasRole("ADMIN")
+                        .requestMatchers("/storefront/**").permitAll()
+                        .requestMatchers("/backoffice/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .csrf().disable();
+                .csrf(csrf -> csrf.disable());
         return http.build();
     }
 

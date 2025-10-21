@@ -117,10 +117,10 @@ class RatingServiceTest {
         RatingListVm actualResponse = ratingService.getRatingListWithFilter(proName, cusName, message, createdFrom, createdTo, pageNo, pageSize);
         assertEquals(totalPage, actualResponse.totalPages());
         assertEquals(1, actualResponse.totalElements());
-        assertEquals(proName, actualResponse.ratingList().getFirst().productName());
-        assertEquals(message, actualResponse.ratingList().getFirst().content());
-        assertEquals(firstName, actualResponse.ratingList().getFirst().firstName());
-        assertEquals(lastName, actualResponse.ratingList().getFirst().lastName());
+        assertEquals(proName, actualResponse.ratingList().get(0).productName());
+        assertEquals(message, actualResponse.ratingList().get(0).content());
+        assertEquals(firstName, actualResponse.ratingList().get(0).firstName());
+        assertEquals(lastName, actualResponse.ratingList().get(0).lastName());
     }
 
     @Test
@@ -181,7 +181,7 @@ class RatingServiceTest {
 
     @Test
     void deleteRating_ValidRatingId_ShouldSuccess() {
-        Long id = ratingRepository.findAll().getFirst().getId();
+        Long id = ratingRepository.findAll().get(0).getId();
         ratingService.deleteRating(id);
         Optional<Rating> rating = ratingRepository.findById(id);
         assertFalse(rating.isPresent());
